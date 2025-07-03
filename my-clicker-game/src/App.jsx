@@ -7,8 +7,20 @@ import CounterDisplay from './components/CounterDisplay'
 import ClickButton     from './components/ClickButton'
 import BuildingList    from './components/BuildingList'
 import Shop            from './components/Shop.jsx'
-import FloatingText    from './components/FloatingText'
-import SoundManager    from './components/SoundManager'
+// import FloatingText    from './components/FloatingText'
+// import SoundManager    from './components/SoundManager'
+
+const initialShopItems = [
+  {
+    id: 'powerClick',
+    name: 'Power Click',
+    description: 'Permanently +1 click power',
+    cost: 50,
+    effect: { type: 'clickPower', amount: 1 },
+    unlockAfterClicks: 50,
+    purchased: false,
+  },
+];
 
 export default function App() {
   const [count, setCount]       = useState(0)
@@ -16,7 +28,7 @@ export default function App() {
   const [clickPower, setClickPower]   = useState(1)
 
   const [buildings, setBuildings] = useState([])
-  const [shopItems, setShopItems] = useState([])
+  const [shopItems, setShopItems] = useState([initialShopItems])
 
   useEffect(() => {
     const iv = setInterval(() => {
@@ -29,12 +41,26 @@ export default function App() {
   function handleClick() {
     setCount(c => c + clickPower)
     setTotalClicks(n => n + 1)
-    SoundManager.play('click')
-    FloatingText.spawn(`+${clickPower}`)
+    // SoundManager.play('click')
+    // FloatingText.spawn(`+${clickPower}`)
   }
 
   function buyBuilding(id) {}
-  function buyShopItem(id) {}
+  function buyShopItem(id) {
+    setShopItems(items =>
+      items.map(item => {
+        if (item.id !== id || count < item.cost || item.purchased) return item;
+
+        setCount(c => c - item.cost);
+
+        if (item.effect.type === 'clickPower') {
+          setClickPower(cp => cp + item.effect.amount);
+        }
+
+        return { ...item, purchased: true };
+      })
+    );
+  }
 
   return (
     <div className="p-4 space-y-6">
@@ -42,10 +68,10 @@ export default function App() {
       <ClickButton onClick={handleClick} />
       <BuildingList buildings={buildings} onBuy={buyBuilding} />
       <Shop 
-      hopItems={shopItems} 
-      onBuy={buyShopItem} 
-      totalClicks={totalClicks}
-      count={count} 
+        shopItems={shopItems} 
+        onBuy={buyShopItem} 
+        totalClicks={totalClicks}
+        count={count} 
       />
       <FloatingText.Container />
       <SoundManager.Container />
