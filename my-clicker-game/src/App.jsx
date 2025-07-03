@@ -23,9 +23,9 @@ import Shop            from './components/Shop.jsx'
 // ];
 
 export default function App() {
-  // const [count, setCount]       = useState(0)
+  const [count, setCount]       = useState(0)
   // const [totalClicks, setTotalClicks] = useState(0)
-  // const [clickPower, setClickPower]   = useState(1)
+  const [clickPower, setClickPower]   = useState(1)
 
   // const [buildings, setBuildings] = useState([])
   // const [shopItems, setShopItems] = useState([initialShopItems])
@@ -39,8 +39,7 @@ export default function App() {
   // }, [buildings])
 
   function handleClick() {
-    console.log("CLICK");
-    // setCount(c => c + clickPower)
+    setCount(c => c + clickPower)
     // setTotalClicks(n => n + 1)
     // SoundManager.play('click')
     // FloatingText.spawn(`+${clickPower}`)
@@ -65,6 +64,7 @@ export default function App() {
 
   return (
     <div className="p-4 space-y-6">
+      <CounterDisplay count={count} />
       <ClickButton onClick={handleClick} />
     </div>
   )
