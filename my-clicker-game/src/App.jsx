@@ -70,9 +70,7 @@ export default function App() {
   )
 }
 
-
-    //  <CounterDisplay count={count} />
-    //   
+   
     //   <BuildingList buildings={buildings} onBuy={buyBuilding} />
     //   <Shop 
     //     shopItems={shopItems} 
