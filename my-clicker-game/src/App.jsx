@@ -10,74 +10,80 @@ import Shop            from './components/Shop.jsx'
 // import FloatingText    from './components/FloatingText'
 // import SoundManager    from './components/SoundManager'
 
-const initialShopItems = [
-  {
-    id: 'powerClick',
-    name: 'Power Click',
-    description: 'Permanently +1 click power',
-    cost: 50,
-    effect: { type: 'clickPower', amount: 1 },
-    unlockAfterClicks: 50,
-    purchased: false,
-  },
-];
+// const initialShopItems = [
+//   {
+//     id: 'powerClick',
+//     name: 'Power Click',
+//     description: 'Permanently +1 click power',
+//     cost: 50,
+//     effect: { type: 'clickPower', amount: 1 },
+//     unlockAfterClicks: 50,
+//     purchased: false,
+//   },
+// ];
 
 export default function App() {
-  const [count, setCount]       = useState(0)
-  const [totalClicks, setTotalClicks] = useState(0)
-  const [clickPower, setClickPower]   = useState(1)
+  // const [count, setCount]       = useState(0)
+  // const [totalClicks, setTotalClicks] = useState(0)
+  // const [clickPower, setClickPower]   = useState(1)
 
-  const [buildings, setBuildings] = useState([])
-  const [shopItems, setShopItems] = useState([initialShopItems])
+  // const [buildings, setBuildings] = useState([])
+  // const [shopItems, setShopItems] = useState([initialShopItems])
 
-  useEffect(() => {
-    const iv = setInterval(() => {
-      const gain = buildings.reduce((sum, b) => sum + b.cps * b.owned, 0)
-      setCount(c => c + gain)
-    }, 1000)
-    return () => clearInterval(iv)
-  }, [buildings])
+  // useEffect(() => {
+  //   const iv = setInterval(() => {
+  //     const gain = buildings.reduce((sum, b) => sum + b.cps * b.owned, 0)
+  //     setCount(c => c + gain)
+  //   }, 1000)
+  //   return () => clearInterval(iv)
+  // }, [buildings])
 
   function handleClick() {
-    setCount(c => c + clickPower)
-    setTotalClicks(n => n + 1)
+    console.log("CLICK");
+    // setCount(c => c + clickPower)
+    // setTotalClicks(n => n + 1)
     // SoundManager.play('click')
     // FloatingText.spawn(`+${clickPower}`)
   }
 
-  function buyBuilding(id) {}
-  function buyShopItem(id) {
-    setShopItems(items =>
-      items.map(item => {
-        if (item.id !== id || count < item.cost || item.purchased) return item;
+  // function buyBuilding(id) {}
+  // function buyShopItem(id) {
+  //   setShopItems(items =>
+  //     items.map(item => {
+  //       if (item.id !== id || count < item.cost || item.purchased) return item;
 
-        setCount(c => c - item.cost);
+  //       setCount(c => c - item.cost);
 
-        if (item.effect.type === 'clickPower') {
-          setClickPower(cp => cp + item.effect.amount);
-        }
+  //       if (item.effect.type === 'clickPower') {
+  //         setClickPower(cp => cp + item.effect.amount);
+  //       }
 
-        return { ...item, purchased: true };
-      })
-    );
-  }
+  //       return { ...item, purchased: true };
+  //     })
+  //   );
+  // }
 
   return (
     <div className="p-4 space-y-6">
-      <CounterDisplay count={count} />
       <ClickButton onClick={handleClick} />
-      <BuildingList buildings={buildings} onBuy={buyBuilding} />
-      <Shop 
-        shopItems={shopItems} 
-        onBuy={buyShopItem} 
-        totalClicks={totalClicks}
-        count={count} 
-      />
-      <FloatingText.Container />
-      <SoundManager.Container />
     </div>
   )
 }
+
+
+    //  <CounterDisplay count={count} />
+    //   
+    //   <BuildingList buildings={buildings} onBuy={buyBuilding} />
+    //   <Shop 
+    //     shopItems={shopItems} 
+    //     onBuy={buyShopItem} 
+    //     totalClicks={totalClicks}
+    //     count={count} 
+    //   />
+    //   <FloatingText.Container />
+    //   <SoundManager.Container />
+
+
 
 // function App() {
 //   const [count, setCount] = useState(0)
