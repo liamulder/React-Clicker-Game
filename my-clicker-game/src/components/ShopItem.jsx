@@ -1,18 +1,22 @@
+import React from 'react'
+
 export default function ShopItem({ item, onBuy, totalClicks, count }) {
-  if (totalClicks < item.unlockAfterClicks) return null
-  if (item.purchased) return null
+  // Hide until unlocked or after purchase
+  if (totalClicks < item.unlockAfterClicks || item.purchased) return null
 
   const canAfford = count >= item.cost
 
   return (
-    <div className="p-4 border rounded">
-      <h3 className="font-semibold mb-1">{item.name}</h3>
-      <p className="text-sm mb-2">{item.description}</p>
-      <p className="mb-2">Cost: {item.cost}</p>
+    <div className="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow">
+      <div className="flex justify-between items-center mb-2">
+        <h3 className="text-lg font-medium text-gray-800">{item.name}</h3>
+        <span className="text-sm text-gray-500">Cost: {item.cost}</span>
+      </div>
+      <p className="text-sm text-gray-600 mb-4">{item.description}</p>
       <button
-        disabled={!canAfford}
         onClick={onBuy}
-        className="px-3 py-1 bg-yellow-500 rounded disabled:opacity-50"
+        disabled={!canAfford}
+        className="w-full py-2 bg-yellow-500 text-white rounded shadow disabled:opacity-50 disabled:cursor-not-allowed hover:bg-yellow-600 transition-all"
       >
         Buy
       </button>
